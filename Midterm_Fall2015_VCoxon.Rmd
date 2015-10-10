@@ -240,16 +240,51 @@ The probability that a randomly selected student who received a voucher scored a
 
 8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
 
-Null: After one year, there is no average difference in math scores between studentes who receive vouchers and those who do not.
+Null: After one year, there is no average difference in math scores between students who receive vouchers and those who do not.
 $H_0$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] = 0$
 Alternative: After one year, there is an average difference in math scores between studentes who receive vouchers and those who do not.
 $H_A$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] != 0$ 
 
 9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
 ```{r}
+mean(clean.vouch$y1_math_percentile)
+sd(clean.vouch$y1_math_percentile)
+length(clean.vouch$y1_math_percentile)
 
+mean(clean.vouch$y0_math_percentile)
+sd(clean.vouch$y0_math_percentile)
+length(clean.vouch$y0_math_percentile)
+
+mdiff.vouch <- mean(clean.vouch$y1_math_percentile) - mean(clean.vouch$y0_math_percentile);print(mdiff.vouch)
+SE.mdiff.vouch <- sqrt(sd(clean.vouch$y0_math_percentile)^2/length(clean.vouch$y0_math_percentile) + sd(clean.vouch$y1_math_percentile)^2/length(clean.vouch$y1_math_percentile));print(SE.mdiff.vouch2)
+
+mean(clean.no.vouch$y1_math_percentile)
+sd(clean.no.vouch$y1_math_percentile)
+length(clean.no.vouch$y1_math_percentile)
+
+mean(clean.no.vouch$y0_math_percentile)
+sd(clean.no.vouch$y0_math_percentile)
+length(clean.no.vouch$y0_math_percentile)
+
+mdiff.no.vouch <- mean(clean.no.vouch$y1_math_percentile) - mean(clean.no.vouch$y0_math_percentile);print(mdiff.no.vouch)
+SE.mdiff.no.vouch <- sqrt(sd(clean.no.vouch$y0_math_percentile)^2/length(clean.no.vouch$y0_math_percentile) + sd(clean.no.vouch$y1_math_percentile)^2/length(clean.no.vouch$y1_math_percentile));print(SE.mdiff.no.vouch)
+
+diff.of.means <- mdiff.vouch - mdiff.no.vouch;print(diff.of.means)
+SE.pool.diff.of.means <- sqrt(SE.mdiff.vouch^2 + SE.mdiff.no.vouch^2); print(SE.diff.of.means)
+
+t.obs <- diff.of.means - 0/SE.diff.of.means;print(t.obs)
+# t.obs = -0.6183467 or |-0.6183467| = 0.6183467
+
+#Let's try it with the t.test function
+t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"])
+```
+We can fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not.
 
 10. (2 points) Would your conclusion change at $\alpha = 0.10$? Why or why not?
+```{r}
+t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"], conf.level = 0.90)
+```
+We can still fail to reject the null because the $p_{obs} > p_{0.10/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not. The difference we do observe is the equivalent to several tenths of a percentage point and is not statistically different from 0.
 
 11. (6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about? 
 
