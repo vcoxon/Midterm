@@ -172,7 +172,7 @@ stat.desc(clean.scores)
 
 stat.desc(clean.scores, basic=F)
 ```
-I cleaned the data and then checked to see if there was a dfference in the summary statistics based on the scores from the cleaned data. There is a difference, as would be expected when missing observations are dropped. Dropping observations with missing values effectively lowered the sample size from 2666 observations to 1455 observations.We might want to be a little more cautious in any inferences we make from this data.
+I cleaned the data and then checked to see if there was a dfference in the summary statistics based on the scores from the cleaned data. There is a difference, as would be expected when missing observations are dropped. Dropping observations with missing values effectively lowered the sample size from 2666 observations to 1455 observations. We might want to be a little more cautious in any inferences we make from this data.
 Reading Year 0 = 22.78; Clean = 22.57          Mathematics Year 0 = 16.54; Clean = 16.42  
 Reading Year 1 = 26.06; Clean = 24.63          Mathematics Year 1 = 22.30; Clean = 23.24
 Reading Year 2 = 26.09; Clean = 25.26          Mathematics Year 2 = 23.56; Clean = 24.24 
@@ -181,37 +181,37 @@ Reading Year 3 = 32.63; Clean = 33.54          Mathematics Year 3 = 32.50; Clean
 3. (8 points) Make a figure (either a density plot of a histgram format) comparing the distributions of percentile reading scores for students who did and did not receive a voucher. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. 
 
 ```{r}
-no.vouch <- filter(clean.nyc,Treatment=="1")
-vouch <- filter(clean.nyc,Treatment=="0")
-qplot(no.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
-qplot(vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
-qplot(no.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
-qplot(vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
-qplot(no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
-qplot(vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
-qplot(no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
-qplot(vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
+clean.no.vouch <- filter(clean.nyc,Treatment=="1")
+clean.vouch <- filter(clean.nyc,Treatment=="0")
+qplot(clean.no.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
+qplot(clean.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 0 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
+qplot(clean.no.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
+qplot(clean.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 1 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
+qplot(clean.no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
+qplot(clean.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
+qplot(clean.no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
+qplot(clean.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Cleaned Data Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
 ```
-These were done with the cleaned data.  Now I want to look at the original "dirty" data to seee if the right skew is still there. If so, I have concerns about applying the normal model.
+These were done with the cleaned data.  Now I want to look at the original "dirty" data to see if the right skew is still there. If so, I have concerns about applying the normal model.
 ```{r}
 nyc.no.vouch <- filter(nyc,Treatment=="1")
 nyc.vouch <- filter(nyc,Treatment=="0")
-qplot(nyc.no.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
-qplot(nyc.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
-qplot(nyc.no.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
-qplot(nyc.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
-qplot(nyc.no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
-qplot(nyc.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
-qplot(nyc.no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
-qplot(nyc.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
-
+qplot(nyc.no.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 0 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 1 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
 ```
-
 
 4. (4 points) In no more than 2-3 sentences, describe what your visualization in 1.C indicates about these data. Do the treatment and control groups appear to be similar (in terms of reading pre-test scores)? Why or why not? 
 ```{r}
-summary(vouch$y0_read_percentile)
-summary(no.vouch$y0_read_percentile)
+summary(clean.vouch$y0_read_percentile)
+summary(clean.no.vouch$y0_read_percentile)
+summary(nyc.vouch$y0_read_percentile)
+summary(nyc.no.vouch$y0_read_percentile)
 ```
 Looking at both histograms and summary statstics for pre-test reading scores of both the dirty and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardlesss, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.  
 
@@ -246,6 +246,8 @@ Alternative: After one year, there is an average difference in math scores betwe
 $H_A$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] != 0$ 
 
 9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
+```{r}
+
 
 10. (2 points) Would your conclusion change at $\alpha = 0.10$? Why or why not?
 
