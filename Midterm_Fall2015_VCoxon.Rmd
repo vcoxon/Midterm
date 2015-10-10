@@ -55,6 +55,7 @@ nyc = read.csv("C:/Users/Victoria/Desktop/PADP 8120/Midterm_Fall2015_VCoxon/inpu
 str(nyc)
 nyc<-read.table("C:/Users/Victoria/Desktop/PADP 8120/Midterm_Fall2015_VCoxon/input/NYC_SchoolVoucher_Experiment.csv", sep=",", header=T)
 head(nyc)
+str(nyc)
 ```
 There are 2666 observations of 18 variables.
 
@@ -83,6 +84,41 @@ Most of the variables you need should be pretty self explanatory:
 1. (6 points) Compute the average reading and math percentiles for each year across all students. 
 
 ```{r}
+summary(nyc$y0_read_percentile)
+summary(nyc$y0_math_percentile)
+summary(nyc$y1_read_percentile)
+summary(nyc$y1_math_percentile)
+summary(nyc$y2_read_percentile)
+summary(nyc$y2_math_percentile)
+summary(nyc$y3_read_percentile)
+summary(nyc$y3_math_percentile)
+```
+summary(nyc$y0_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    4.00   16.00   22.78   34.00   99.00     815 
+summary(nyc$y0_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    1.00    9.00   16.54   25.00   98.00     815 
+summary(nyc$y1_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    8.00   20.00   26.06   40.00   97.00     586 
+summary(nyc$y1_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    0.0     5.0    15.0    22.3    34.0    99.0     586 
+summary(nyc$y2_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    8.00   21.00   26.09   39.00   99.00     912 
+summary(nyc$y2_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    5.00   16.00   23.56   37.00   99.00     912 
+summary(nyc$y3_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00   20.00   33.00   32.63   44.00   95.00     865 
+summary(nyc$y3_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    0.0    20.0    32.0    32.5    45.0    99.0     865 
+
+```{r}
 library(dplyr)
 library(ggplot2)
 library(pastecs)
@@ -97,6 +133,8 @@ stat.desc(scores)
 stat.desc(scores, basic=F)
 
 # Method adapted from http://www.ats.ucla.edu/stat/r/faq/basic_desc.htm 
+#The problems with the attach function are known, but the ease with which to obtain the statistics is compelling.
+#I compared the means derived from the summary function with those derived from using the cluster of commands beginning with the attach() function to make sure I wasn't missing anything. They are consistent.
 ```
 The mean scores for reading and mathematics are as follows:
 Reading Year 0 = 22.78          Mathematics Year 0 = 16.54 
@@ -112,7 +150,41 @@ stat.desc(scores, desc=F)
 clean.nyc <- filter(nyc, y0_read_percentile!='NA', y0_math_percentile!='NA', y1_read_percentile!='NA', y1_math_percentile!='NA')
 str(clean.nyc)              
 head(clean.nyc)
+summary(clean.nyc$y0_read_percentile)
+summary(clean.nyc$y0_math_percentile)
+summary(clean.nyc$y1_read_percentile)
+summary(clean.nyc$y1_math_percentile)
+summary(clean.nyc$y2_read_percentile)
+summary(clean.nyc$y2_math_percentile)
+summary(clean.nyc$y3_read_percentile)
+summary(clean.nyc$y3_math_percentile)
+```
+summary(clean.nyc$y0_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    4.00   16.00   22.57   34.00   99.00 
+summary(clean.nyc$y0_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    2.00    9.00   16.42   25.00   98.00 
+summary(clean.nyc$y1_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    7.00   18.00   24.63   37.50   97.00 
+summary(clean.nyc$y1_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    5.00   15.00   23.24   36.00   99.00 
+summary(clean.nyc$y2_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    8.00   20.00   25.26   38.00   98.00     343 
+summary(clean.nyc$y2_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    5.00   16.00   24.24   37.00   99.00     343 
+summary(clean.nyc$y3_read_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00   21.00   34.00   33.54   46.00   95.00     333 
+summary(clean.nyc$y3_math_percentile)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00   21.00   32.00   33.23   45.00   99.00     333 
 
+```{r}
 attach(clean.nyc)
 clean.scores <- cbind(y0_read_percentile, y0_math_percentile, y1_read_percentile, y1_math_percentile, y2_read_percentile, y2_math_percentile, y3_read_percentile, y3_math_percentile)
 stat.desc(scores)
@@ -141,76 +213,59 @@ qplot(no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Ye
 qplot(vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
 qplot(no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("blue"))
 qplot(vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("darkgreen"))
-
-ggplot(data = no.vouch) + geom_density(aes(x = y0_read_percentile), main = "Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores",fill = "blue")
-ggplot(data = vouch) + geom_density(aes(x = y0_read_percentile),main = "Year 0 Reading Scores - Voucher",xlab = "Reading Percentile Scores",fill="darkgreen" )
-ggplot(data = no.vouch) + geom_density(aes(x = y1_read_percentile), main = "Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores",fill = "blue")
-ggplot(data = vouch) + geom_density(aes(x = y1_read_percentile),main = "Year 1 Reading Scores - Voucher",xlab = "Reading Percentile Scores",fill="darkgreen")
-ggplot(data = no.vouch) + geom_density(aes(x = y2_read_percentile), main = "Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores",fill = "blue")
-ggplot(data = vouch) + geom_density(aes(x = y2_read_percentile),main = "Year 2 Reading Scores - Voucher",xlab = "Reading Percentile Scores",fill="darkgreen")
-ggplot(data = no.vouch) + geom_density(aes(x = y3_read_percentile), main = "Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores",fill = "blue")
-ggplot(data = vouch) + geom_density(aes(x = y3_read_percentile),main = "Year 3 Reading Scores - Voucher",xlab = "Reading Percentile Scores",fill="darkgreen")
 ```
+These were done with the cleaned data.  Now I want to look at the original "dirty" data to seee if the right skew is still there. If so, I have concerns about applying the normal model.
+```{r}
+nyc.no.vouch <- filter(nyc,Treatment=="1")
+nyc.vouch <- filter(nyc,Treatment=="0")
+qplot(nyc.no.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y0_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 0 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y1_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 1 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y2_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 2 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+qplot(nyc.no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - No Voucher", xlab = "Reading Percentile Scores", fill=I("lightblue"))
+qplot(nyc.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
+
+```
+
 
 4. (4 points) In no more than 2-3 sentences, describe what your visualization in 1.C indicates about these data. Do the treatment and control groups appear to be similar (in terms of reading pre-test scores)? Why or why not? 
 ```{r}
 summary(vouch$y0_read_percentile)
 summary(no.vouch$y0_read_percentile)
 ```
-Looking at both density plots, histograms, and summary statstics for pre-test reading scores of the *cleaned* data it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Despite this, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.  
+Looking at both histograms and summary statstics for pre-test reading scores of both the dirty and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardlesss, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.  
 
 5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren't part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences. 
 
-When I cleaned the data, I dropped 1,211 observations which is close to half of the original sample and may not be enough observations to meet the required test power. This would compromise the external validity/generalizability of the statistical conclusions. Additionally, there may be some other attribute, such as "goodness of fit" with the school culture or the broader community, that is not included in this model that could account for some of the change in scores other than the voucher. Children who do not "fit" or cannot continue for any other reason may change schools after the first year; these observations got dropped when I cleaned the data.
+I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. 
 
 6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?
 ```{r}
-table(nyc$Treatment)
-nyc.pvouch0 = 1292/2666
-nyc.vouch1 = 1374/2666
-nyc.vouch1
-#Probability of receiving a voucher is 0.52; 1-p = 0.48
-summary(nyc$y0_math_percentile)
-
-mean <- 16.5424095 
-sd <- 19.4851214 
-nyc.prob.51 <- pnorm(q=51, mean = mean, sd = sd, lower.tail = FALSE)
-nyc.prob.51
-# Probability of scoring above the 50%ile is 0.038 or 3.6 %.
-
-nyc.vouch.mean <- mean(vouch$y0_math_percentile)
-nyc.vouch.sd <- sd(vouch$y0_math_percentile)
-nyc.vouch1 <- pnorm(q=51, mean = nyc.vouch.mean, sd = nyc.vouch.sd, lower.tail = FALSE)
-
-nyc.prob.vouch.51 = nyc.vouch1 * nyc.prob.51
-nyc.prob.vouch.51
+table(nyc$Treatment,nyc$y0_math_percentile > 50)
+(896+67) / (824+64+896+67)
+# P(voucher) = 0.5202593
+(64+67)/(624+50+896+67)
+# P(y0_math_percentile >50) = 0.08002443
+67/(624+50+896+67) 
+0.5202593 * 0.04092853
 ```
-The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.001425803. 
+The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. 
 
-7. (4 points) What is the probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test?
+7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?
 ```{r}
-table(clean.nyc$Treatment)
-clean.nyc.pvouch0 = 674/1455
-clean.nyc.vouch1 = 781/1455
-clean.nyc.vouch1
-#Probability of receiving a voucher is 0.51; 1-p = 0.49
-summary(clean.nyc$y0_math_percentile)
-
-clean.mean <- mean(clean.nyc$y0_math_percentile)
-clean.sd <- sd(clean.nyc$y0_math_percentile)
-prob.51 <- pnorm(q=51, mean = clean.mean, sd = clean.sd, lower.tail = FALSE)
-# Probability of scoring above the 50%ile is 0.036 or 3.6 %.
-
-vouch.mean <- mean(vouch$y0_math_percentile)
-vouch.sd <- sd(vouch$y0_math_percentile)
-pnorm(q=51, mean = vouch.mean, sd = vouch.sd, lower.tail = FALSE)
-
-prob.vouch.51 = clean.nyc.vouch1 * prob.51
-prob.vouch.51
+table(clean.nyc$Treatment,clean.nyc$y0_math_percentile > 50)
+53/(728+53)
 ```
-The probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test is 0.01927126.
+The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is 0.06786172.
 
 8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
+
+Null: After one year, there is no average difference in math scores between studentes who receive vouchers and those who do not.
+$H_0$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] = 0$
+Alternative: After one year, there is an average difference in math scores between studentes who receive vouchers and those who do not.
+$H_A$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] != 0$ 
 
 9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
 
