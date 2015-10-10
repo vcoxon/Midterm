@@ -84,6 +84,7 @@ Most of the variables you need should be pretty self explanatory:
 1. (6 points) Compute the average reading and math percentiles for each year across all students. 
 
 ```{r}
+library(knitr)
 summary(nyc$y0_read_percentile)
 summary(nyc$y0_math_percentile)
 summary(nyc$y1_read_percentile)
@@ -93,30 +94,17 @@ summary(nyc$y2_math_percentile)
 summary(nyc$y3_read_percentile)
 summary(nyc$y3_math_percentile)
 ```
-summary(nyc$y0_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    4.00   16.00   22.78   34.00   99.00     815 
-summary(nyc$y0_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    1.00    9.00   16.54   25.00   98.00     815 
-summary(nyc$y1_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    8.00   20.00   26.06   40.00   97.00     586 
-summary(nyc$y1_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    0.0     5.0    15.0    22.3    34.0    99.0     586 
-summary(nyc$y2_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    8.00   21.00   26.09   39.00   99.00     912 
-summary(nyc$y2_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    5.00   16.00   23.56   37.00   99.00     912 
-summary(nyc$y3_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00   20.00   33.00   32.63   44.00   95.00     865 
-summary(nyc$y3_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    0.0    20.0    32.0    32.5    45.0    99.0     865 
+
+nyc_Year           |Min. | 1st Qu.|Median | Mean  |3rd Qu. | Max.  | NA's 
+ ------------------|-----|--------|-------|-------|--------|-------|---- 
+y0_read_percentile |0.00 | 4.00   |16.00  | 22.78 | 34.00  | 99.00 | 815 
+y0_math_percentile |0.00 | 1.00   |9.00   | 16.54 | 25.00  | 98.00 | 815
+y1_read_percentile |0.00 | 8.00   |20.00  | 26.06 | 40.00  | 97.00 | 586
+y1_math_percentile |0.0  | 5.0    |15.0   | 22.3  | 34.0   | 99.0  | 586
+y2_read_percentile |0.00 | 8.00   |21.00  | 26.09 | 39.00  | 99.00 | 912 
+y2_math_percentile |0.00 | 5.00   |16.00  | 23.56 | 37.00  | 99.00 | 912 
+y3_read_percentile |0.00 | 20.00  |33.00  | 32.63 | 44.00  | 95.00 | 865 
+y3_math_percentile |0.0  |20.0    |32.0   | 32.5  | 45.0   | 99.0  | 865 
 
 ```{r}
 library(dplyr)
@@ -137,10 +125,13 @@ stat.desc(scores, basic=F)
 #I compared the means derived from the summary function with those derived from using the cluster of commands beginning with the attach() function to make sure I wasn't missing anything. They are consistent.
 ```
 The mean scores for reading and mathematics are as follows:
-Reading Year 0 = 22.78          Mathematics Year 0 = 16.54 
-Reading Year 1 = 26.06          Mathematics Year 1 = 22.30
-Reading Year 2 = 26.09          Mathematics Year 2 = 23.56
-Reading Year 3 = 32.63          Mathematics Year 3 = 32.50
+
+Reading                   |      Mathematics
+--------------------------|----------------------------------
+Reading Year 0 = 22.78    |      Mathematics Year 0 = 16.54 
+Reading Year 1 = 26.06    |      Mathematics Year 1 = 22.30
+Reading Year 2 = 26.09    |      Mathematics Year 2 = 23.56
+Reading Year 3 = 32.63    |      Mathematics Year 3 = 32.50
 
 2. (4 points) Clean the original dataset by removing all students who do not have observed pre-test scores and year 1 scores for reading and for math.
 
@@ -159,30 +150,17 @@ summary(clean.nyc$y2_math_percentile)
 summary(clean.nyc$y3_read_percentile)
 summary(clean.nyc$y3_math_percentile)
 ```
-summary(clean.nyc$y0_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    4.00   16.00   22.57   34.00   99.00 
-summary(clean.nyc$y0_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    2.00    9.00   16.42   25.00   98.00 
-summary(clean.nyc$y1_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    7.00   18.00   24.63   37.50   97.00 
-summary(clean.nyc$y1_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    5.00   15.00   23.24   36.00   99.00 
-summary(clean.nyc$y2_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    8.00   20.00   25.26   38.00   98.00     343 
-summary(clean.nyc$y2_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    5.00   16.00   24.24   37.00   99.00     343 
-summary(clean.nyc$y3_read_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00   21.00   34.00   33.54   46.00   95.00     333 
-summary(clean.nyc$y3_math_percentile)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00   21.00   32.00   33.23   45.00   99.00     333 
+Clean_Year         |Min. | 1st Qu.|Median | Mean  |3rd Qu. | Max.  | NA's 
+ ------------------|-----|--------|-------|-------|--------|-------|---- 
+y0_read_percentile |0.00 | 4.00   |16.00  | 22.57 | 34.00  | 99.00 | 
+y0_math_percentile |0.00 | 2.00   |9.00   | 16.42 | 25.00  | 98.00 | 
+y1_read_percentile |0.00 | 7.00   |18.00  | 24.63 | 37.50  | 97.00 | 
+y1_math_percentile |0.00 | 5.00   |15.00  | 22.24 | 36.00  | 99.00 | 
+y2_read_percentile |0.00 | 8.00   |20.00  | 25.26 | 38.00  | 98.00 | 343 
+y2_math_percentile |0.00 | 5.00   |16.00  | 24.24 | 37.00  | 99.00 | 343 
+y3_read_percentile |0.00 | 21.00  |34.00  | 33.54 | 46.00  | 95.00 | 333 
+y3_math_percentile |0.00 | 21.00  |32.00  | 33.23 | 45.00  | 99.00 | 333 
+
 
 ```{r}
 attach(clean.nyc)
