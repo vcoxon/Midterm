@@ -308,11 +308,23 @@ We can still fail to reject the null because the $p_{obs} > p_{0.10/2}$. Based o
 ```{r}
 table(clean.nyc$Treatment)
 ```
-Because this is an experiment, I am making the assumption thatthere was random selection in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probabiility of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
+Because this is an experiment, I am making the assumption thatthere was random selection in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
 
 These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
 12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols. 
+
+Null: *There is no average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
+
+
+$H_0$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch}$ $= 0$
+
+
+Alternative: *There is an average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
+
+
+$H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch}$ $!= 0$ 
+
 
 13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.  
  
