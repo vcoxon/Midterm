@@ -56,7 +56,7 @@ str(nyc)
 nyc<-read.table("C:/Users/Victoria/Desktop/PADP 8120/Midterm_Fall2015_VCoxon/input/NYC_SchoolVoucher_Experiment.csv", sep=",", header=T)
 head(nyc)
 ```
-There are 2666 observations of  17 variables.
+There are 2666 observations of 18 variables.
 
 Most of the variables you need should be pretty self explanatory:
 
@@ -92,7 +92,6 @@ scores <- cbind(y0_read_percentile, y0_math_percentile, y1_read_percentile, y1_m
 stat.desc(scores)
 
 options(scipen=100)
-options(digits=2)
 stat.desc(scores)
 
 stat.desc(scores, basic=F)
@@ -119,7 +118,6 @@ clean.scores <- cbind(y0_read_percentile, y0_math_percentile, y1_read_percentile
 stat.desc(scores)
 
 options(scipen=100)
-options(digits=2)
 stat.desc(clean.scores)
 
 stat.desc(clean.scores, basic=F)
@@ -163,9 +161,33 @@ Looking at both density plots, histograms, and summary statstics for pre-test re
 
 5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren't part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences. 
 
-When I cleaned the data, I dropped 1,211 observations which is close to half of the original sample and may not be enough observations to meet the required test power. This would compromise the external validity/generalizability of the statistical conclusions. Additionally, there may be some other attribute, such as "goodness of fit" with the school culture or the broader community, that is not included in this model that could account for some of the change in scores other than the voucher. Children who do not "fit" or cannot continue for any other reason may change schools after the first year; these observations got dropped when I cleaned the data. 
+When I cleaned the data, I dropped 1,211 observations which is close to half of the original sample and may not be enough observations to meet the required test power. This would compromise the external validity/generalizability of the statistical conclusions. Additionally, there may be some other attribute, such as "goodness of fit" with the school culture or the broader community, that is not included in this model that could account for some of the change in scores other than the voucher. Children who do not "fit" or cannot continue for any other reason may change schools after the first year; these observations got dropped when I cleaned the data.
 
 6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?
+```{r}
+table(nyc$Treatment)
+nyc.pvouch0 = 1292/2666
+nyc.vouch1 = 1374/2666
+nyc.vouch1
+#Probability of receiving a voucher is 0.52; 1-p = 0.48
+summary(nyc$y0_math_percentile)
+
+mean <- 16.5424095 
+sd <- 19.4851214 
+nyc.prob.51 <- pnorm(q=51, mean = mean, sd = sd, lower.tail = FALSE)
+nyc.prob.51
+# Probability of scoring above the 50%ile is 0.038 or 3.6 %.
+
+nyc.vouch.mean <- mean(vouch$y0_math_percentile)
+nyc.vouch.sd <- sd(vouch$y0_math_percentile)
+nyc.vouch1 <- pnorm(q=51, mean = nyc.vouch.mean, sd = nyc.vouch.sd, lower.tail = FALSE)
+
+nyc.prob.vouch.51 = nyc.vouch1 * nyc.prob.51
+nyc.prob.vouch.51
+```
+The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.001425803. 
+
+7. (4 points) What is the probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test?
 ```{r}
 table(clean.nyc$Treatment)
 clean.nyc.pvouch0 = 674/1455
@@ -186,9 +208,8 @@ pnorm(q=51, mean = vouch.mean, sd = vouch.sd, lower.tail = FALSE)
 prob.vouch.51 = clean.nyc.vouch1 * prob.51
 prob.vouch.51
 ```
-The probability of recieving and voucher and scoring above the 50%ile on the math pre-test is 0.019.
+The probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test is 0.01927126.
 
-7. (4 points) What is the probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test?
 
 8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
 
