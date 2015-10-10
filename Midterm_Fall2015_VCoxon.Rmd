@@ -210,7 +210,6 @@ prob.vouch.51
 ```
 The probability that a randomly selected student who received a voucher group scored above the 50th percentile on the math pre-test is 0.01927126.
 
-
 8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
 
 9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
