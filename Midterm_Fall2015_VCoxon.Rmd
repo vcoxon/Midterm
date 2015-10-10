@@ -59,6 +59,7 @@ str(nyc)
 ```
 There are 2666 observations of 18 variables.
 
+
 Most of the variables you need should be pretty self explanatory:
 
 | Variable | Description |
@@ -80,6 +81,7 @@ Most of the variables you need should be pretty self explanatory:
 | `y2_math_percentile`    |  math score percentile after 2y |
 | `y3_read_percentile`   |  reading score percentile after 3y |
 | `y3_math_percentile`    |  math score percentile after 3y |
+
 
 1. (6 points) Compute the average reading and math percentiles for each year across all students. 
 
@@ -133,6 +135,7 @@ Reading Year 1 = 26.06    |      Mathematics Year 1 = 22.30
 Reading Year 2 = 26.09    |      Mathematics Year 2 = 23.56
 Reading Year 3 = 32.63    |      Mathematics Year 3 = 32.50
 
+
 2. (4 points) Clean the original dataset by removing all students who do not have observed pre-test scores and year 1 scores for reading and for math.
 
 ```{r}
@@ -178,6 +181,7 @@ Reading Year 1 = 26.06; Clean = 24.63          Mathematics Year 1 = 22.30; Clean
 Reading Year 2 = 26.09; Clean = 25.26          Mathematics Year 2 = 23.56; Clean = 24.24 
 Reading Year 3 = 32.63; Clean = 33.54          Mathematics Year 3 = 32.50; Clean = 33.23
 
+
 3. (8 points) Make a figure (either a density plot of a histgram format) comparing the distributions of percentile reading scores for students who did and did not receive a voucher. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. 
 
 ```{r}
@@ -206,6 +210,7 @@ qplot(nyc.no.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main =
 qplot(nyc.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "Original Data Year 3 Reading Scores - Voucher", xlab = "Reading Percentile Scores", fill=I("lightgreen"))
 ```
 
+
 4. (4 points) In no more than 2-3 sentences, describe what your visualization in 1.C indicates about these data. Do the treatment and control groups appear to be similar (in terms of reading pre-test scores)? Why or why not? 
 ```{r}
 summary(clean.vouch$y0_read_percentile)
@@ -215,9 +220,11 @@ summary(nyc.no.vouch$y0_read_percentile)
 ```
 Looking at both histograms and summary statstics for pre-test reading scores of both the dirty and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardlesss, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.  
 
+
 5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren't part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences. 
 
 I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. 
+
 
 6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?
 ```{r}
@@ -231,6 +238,7 @@ table(nyc$Treatment,nyc$y0_math_percentile > 50)
 ```
 The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. 
 
+
 7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?
 ```{r}
 table(clean.nyc$Treatment,clean.nyc$y0_math_percentile > 50)
@@ -238,12 +246,20 @@ table(clean.nyc$Treatment,clean.nyc$y0_math_percentile > 50)
 ```
 The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is 0.06786172.
 
+
 8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
 
-Null: After one year, there is no average difference in math scores between students who receive vouchers and those who do not.
-$H_0$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] = 0$
-Alternative: After one year, there is an average difference in math scores between studentes who receive vouchers and those who do not.
-$H_A$: [$\mu_{math.vouch.y1} - \mu_{math.vouch.y0}] - [\mu_{math.no.vouch.y1} - \mu_{math.no.vouch}] != 0$ 
+Null: *After one year, there is no average difference in math scores between students who receive vouchers and those who do not.*
+
+
+$H_0$: $\mu_{math.vouch.y1}$ - $\mu_{math.vouch.y0}$ - $\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$ $= 0$
+
+
+Alternative: *After one year, there is an average difference in math scores between students who receive vouchers and those who do not.*
+
+
+$H_A$: $\mu_{math.vouch.y1}$ - $\mu_{math.vouch.y0}$ - $\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$ $!= 0$ 
+
 
 9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
 ```{r}
@@ -256,7 +272,7 @@ sd(clean.vouch$y0_math_percentile)
 length(clean.vouch$y0_math_percentile)
 
 mdiff.vouch <- mean(clean.vouch$y1_math_percentile) - mean(clean.vouch$y0_math_percentile);print(mdiff.vouch)
-SE.mdiff.vouch <- sqrt(sd(clean.vouch$y0_math_percentile)^2/length(clean.vouch$y0_math_percentile) + sd(clean.vouch$y1_math_percentile)^2/length(clean.vouch$y1_math_percentile));print(SE.mdiff.vouch2)
+SE.mdiff.vouch <- sqrt(sd(clean.vouch$y0_math_percentile)^2/length(clean.vouch$y0_math_percentile) + sd(clean.vouch$y1_math_percentile)^2/length(clean.vouch$y1_math_percentile));print(SE.mdiff.vouch)
 
 mean(clean.no.vouch$y1_math_percentile)
 sd(clean.no.vouch$y1_math_percentile)
@@ -270,7 +286,7 @@ mdiff.no.vouch <- mean(clean.no.vouch$y1_math_percentile) - mean(clean.no.vouch$
 SE.mdiff.no.vouch <- sqrt(sd(clean.no.vouch$y0_math_percentile)^2/length(clean.no.vouch$y0_math_percentile) + sd(clean.no.vouch$y1_math_percentile)^2/length(clean.no.vouch$y1_math_percentile));print(SE.mdiff.no.vouch)
 
 diff.of.means <- mdiff.vouch - mdiff.no.vouch;print(diff.of.means)
-SE.pool.diff.of.means <- sqrt(SE.mdiff.vouch^2 + SE.mdiff.no.vouch^2); print(SE.diff.of.means)
+SE.diff.of.means <- sqrt(SE.mdiff.vouch^2 + SE.mdiff.no.vouch^2); print(SE.diff.of.means)
 
 t.obs <- diff.of.means - 0/SE.diff.of.means;print(t.obs)
 # t.obs = -0.6183467 or |-0.6183467| = 0.6183467
@@ -280,13 +296,21 @@ t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math
 ```
 We can fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not.
 
+
 10. (2 points) Would your conclusion change at $\alpha = 0.10$? Why or why not?
 ```{r}
 t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"], conf.level = 0.90)
 ```
 We can still fail to reject the null because the $p_{obs} > p_{0.10/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not. The difference we do observe is the equivalent to several tenths of a percentage point and is not statistically different from 0.
 
+
 11. (6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about? 
+```{r}
+table(clean.nyc$Treatment)
+```
+Because this is an experiment, I am making the assumption thatthere was random selection in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probabiility of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
+
+These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
 12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols. 
 
