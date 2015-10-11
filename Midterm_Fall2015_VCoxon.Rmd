@@ -329,7 +329,6 @@ $H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ 
 
 **13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.**  
 ```{r}
-
 mean(clean.vouch$y1_read_percentile)
 sd(clean.vouch$y1_read_percentile)
 length(clean.vouch$y1_read_percentile)
@@ -379,6 +378,17 @@ We can be 95% confident that the true value of the average difference in Year 0 
 
 
 **16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at $\alpha = 0.10$ significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.**
+
+Null: *There is no average difference in Year 0 pre-test math scores between students in grades Kindergarten through 5.*
+
+
+$H_0$: $\mu_{Kinder.y0}$ != $\mu_{grade1.y0}$ = $\mu_{grade2.y0}$ = $\mu_{grade3.y0}$ = $\mu_{grade4.y0}$ = $\mu_{grade5.y0}$ = $0$
+
+
+Alternative: *There is an average difference in Year 0 pre-test math scores between students in grades Kindergarten through 5.*
+
+
+$H_A$: $\mu_{Kinder.y0}$ = $\mu_{grade1.y0}$ != $\mu_{grade2.y0}$ != $\mu_{grade3.y0}$ != $\mu_{grade4.y0}$ != $\mu_{grade5.y0}$ != $0$
 ```{r}
 table(clean.nyc$Grade)
 Kinder <- filter(clean.nyc, Grade=="0")
@@ -401,17 +411,10 @@ grade4.sd <- sd(grade4$y0_math_percentile); print(grade4.sd)
 grade5.mean <- mean(grade5$y0_math_percentile); print(grade5.mean)
 grade5.sd <- sd(grade5$y0_math_percentile); print(grade5.sd)
 
+summary(aov(y0_math_percentile~Grade,clean.nyc))
+summary.aov(lm(y0_math_percentile~Grade,clean.nyc))
 ```
-Null: *There is no average difference in Year 0 pre-test math scores between students in grades 1 through 5.*
-
-
-$H_0$: $\mu_{grade1.y0}$ = $\mu_{grade2.y0}$ = $\mu_{grade3.y0}$ = $\mu_{grade4.y0}$ = $\mu_{grade5.y0}$ = $0$
-
-
-Alternative: *There is an average difference in Year 0 pre-test math scores between students in grades 1 through 5.*
-
-
-$H_A$: $\mu_{grade1.y0}$ != $\mu_{grade2.y0}$ != $\mu_{grade3.y0}$ != $\mu_{grade4.y0}$ != $\mu_{grade5.y0}$ != $0$
+With an observed probability of $p_{obs} = 0.00007$, we reject the null at the $\alpha_{0.001}$ level; there is statistical evidence that a difference between grades exists in the Year 0 math pre-test scores.
 
 
 **17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?**
