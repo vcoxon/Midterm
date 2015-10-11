@@ -965,7 +965,7 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 </ol>
 <p>Null: <em>After one year, there is no average difference in math scores between students who receive vouchers and those who do not.</em></p>
 <p><span class="math">\(H_0\)</span>: <span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span> - <span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch}\)</span> <span class="math">\(= 0\)</span></p>
-<p>Alternative: <em>After one year, there is an average difference in math scores between studentes who receive vouchers and those who do not.</em></p>
+<p>Alternative: <em>After one year, there is an average difference in math scores between students who receive vouchers and those who do not.</em></p>
 <p><span class="math">\(H_A\)</span>: <span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span> - <span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch}\)</span> <span class="math">\(!= 0\)</span></p>
 <ol start="9" style="list-style-type: decimal">
 <li>(6 points) Evaluate the hypothesis from 1.H at a significance level of <span class="math">\(\alpha = 0.05\)</span> and state your conclusion in 1-2 sentences.</li>
@@ -1011,18 +1011,18 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># t.obs = -0.6183467 or |-0.6183467| = 0.6183467</span>
 
 <span class="co">#Let's try it with the t.test function</span>
-<span class="kw">t.test</span>(clean.nyc$y1_math_percentile[clean.nyc$Treatment==<span class="st">&quot;1&quot;</span>], clean.nyc$y1_math_percentile[clean.nyc$Treatment==<span class="st">&quot;0&quot;</span>])</code></pre>
+<span class="kw">t.test</span>(clean.nyc$y1_math_percentile[clean.nyc$Treatment==<span class="st">&quot;1&quot;</span>] -<span class="st"> </span>clean.nyc$y0_math_percentile[clean.nyc$Treatment==<span class="st">&quot;1&quot;</span>], clean.nyc$y1_math_percentile[clean.nyc$Treatment==<span class="st">&quot;0&quot;</span>] -<span class="st"> </span>clean.nyc$y0_math_percentile[clean.nyc$Treatment==<span class="st">&quot;0&quot;</span>])</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
-## data:  clean.nyc$y1_math_percentile[clean.nyc$Treatment == &quot;1&quot;] and clean.nyc$y1_math_percentile[clean.nyc$Treatment == &quot;0&quot;]
-## t = 0.30021, df = 1394.2, p-value = 0.7641
+## data:  clean.nyc$y1_math_percentile[clean.nyc$Treatment == &quot;1&quot;] - clean.nyc$y0_math_percentile[clean.nyc$Treatment ==  and clean.nyc$y1_math_percentile[clean.nyc$Treatment == &quot;0&quot;] - clean.nyc$y0_math_percentile[clean.nyc$Treatment ==     &quot;1&quot;] and     &quot;0&quot;]
+## t = 0.58291, df = 1385.5, p-value = 0.5601
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.985845  2.703483
+##  -1.462600  2.699293
 ## sample estimates:
 ## mean of x mean of y 
-##  23.40333  23.04451</code></pre>
+##  7.104994  6.486647</code></pre>
 <p>We can fail to reject the null because the <span class="math">\(p_{obs} &gt; p_{0.05/2}\)</span>. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not.</p>
 <ol start="10" style="list-style-type: decimal">
 <li>(2 points) Would your conclusion change at <span class="math">\(\alpha = 0.10\)</span>? Why or why not?</li>
@@ -1041,10 +1041,89 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 ##  23.40333  23.04451</code></pre>
 <p>We can still fail to reject the null because the <span class="math">\(p_{obs} &gt; p_{0.10/2}\)</span>. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not. The difference we do observe is the equivalent to several tenths of a percentage point and is not statistically different from 0.</p>
 <ol start="11" style="list-style-type: decimal">
-<li><p>(6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about?</p></li>
-<li><p>(4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols.</p></li>
-<li><p>(6 points) Conduct a t-test to evaluate this hypothesis at <span class="math">\(\alpha = 0.01\)</span> significance level. Interpret your results in 1-2 complete sentences.</p></li>
-<li><p>(4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.</p></li>
+<li>(6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about?</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(clean.nyc$Treatment)</code></pre>
+<pre><code>## 
+##   0   1 
+## 674 781</code></pre>
+<p>Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other. Both the treatment and control groups meet the condition of n &gt;30.</p>
+<p>These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.</p>
+<ol start="12" style="list-style-type: decimal">
+<li>(4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols.</li>
+</ol>
+<p>Null: <em>There is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.</em></p>
+<p><span class="math">\(H_0\)</span>: <span class="math">\(\mu_{read.vouch.y1}\)</span> - <span class="math">\(\mu_{read.vouch.y0}\)</span> - <span class="math">\(\mu_{read.no.vouch.y1}\)</span> - <span class="math">\(\mu_{read.no.vouch}\)</span> <span class="math">\(= 0\)</span></p>
+<p>Alternative: <em>There is an average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.</em></p>
+<p><span class="math">\(H_A\)</span>: <span class="math">\(\mu_{read.vouch.y1}\)</span> - <span class="math">\(\mu_{read.vouch.y0}\)</span> - <span class="math">\(\mu_{read.no.vouch.y1}\)</span> - <span class="math">\(\mu_{read.no.vouch}\)</span> <span class="math">\(!= 0\)</span></p>
+<ol start="13" style="list-style-type: decimal">
+<li>(6 points) Conduct a t-test to evaluate this hypothesis at <span class="math">\(\alpha = 0.01\)</span> significance level. Interpret your results in 1-2 complete sentences.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(clean.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 24.80564</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(clean.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 21.47778</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(clean.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 674</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(clean.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 23.54006</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(clean.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 21.33938</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(clean.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 674</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mdiff.vouch &lt;-<span class="st"> </span><span class="kw">mean</span>(clean.vouch$y1_read_percentile) -<span class="st"> </span><span class="kw">mean</span>(clean.vouch$y0_read_percentile);<span class="kw">print</span>(mdiff.vouch)</code></pre>
+<pre><code>## [1] 1.265579</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">SE.mdiff.vouch &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sd</span>(clean.vouch$y0_read_percentile)^<span class="dv">2</span>/<span class="kw">length</span>(clean.vouch$y0_read_percentile) +<span class="st"> </span><span class="kw">sd</span>(clean.vouch$y1_read_percentile)^<span class="dv">2</span>/<span class="kw">length</span>(clean.vouch$y1_read_percentile));<span class="kw">print</span>(SE.mdiff.vouch)</code></pre>
+<pre><code>## [1] 1.166206</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(clean.no.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 24.47503</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(clean.no.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 21.39305</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(clean.no.vouch$y1_read_percentile)</code></pre>
+<pre><code>## [1] 781</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(clean.no.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 21.72855</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(clean.no.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 21.74056</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(clean.no.vouch$y0_read_percentile)</code></pre>
+<pre><code>## [1] 781</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mdiff.no.vouch &lt;-<span class="st"> </span><span class="kw">mean</span>(clean.no.vouch$y1_read_percentile) -<span class="st"> </span><span class="kw">mean</span>(clean.no.vouch$y0_read_percentile);<span class="kw">print</span>(mdiff.no.vouch)</code></pre>
+<pre><code>## [1] 2.746479</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">SE.mdiff.no.vouch &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sd</span>(clean.no.vouch$y0_read_percentile)^<span class="dv">2</span>/<span class="kw">length</span>(clean.no.vouch$y0_read_percentile) +<span class="st"> </span><span class="kw">sd</span>(clean.no.vouch$y1_read_percentile)^<span class="dv">2</span>/<span class="kw">length</span>(clean.no.vouch$y1_read_percentile));<span class="kw">print</span>(SE.mdiff.no.vouch)</code></pre>
+<pre><code>## [1] 1.091414</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">diff.of.means &lt;-<span class="st"> </span>mdiff.vouch -<span class="st"> </span>mdiff.no.vouch -<span class="st"> </span><span class="dv">0</span>;<span class="kw">print</span>(diff.of.means)</code></pre>
+<pre><code>## [1] -1.4809</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">SE.diff.of.means &lt;-<span class="st"> </span><span class="kw">sqrt</span>(SE.mdiff.vouch^<span class="dv">2</span> +<span class="st"> </span>SE.mdiff.no.vouch^<span class="dv">2</span>); <span class="kw">print</span>(SE.diff.of.means)</code></pre>
+<pre><code>## [1] 1.597254</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">t.obs &lt;-<span class="st"> </span>diff.of.means -<span class="st"> </span><span class="dv">0</span>/SE.diff.of.means;<span class="kw">print</span>(t.obs)</code></pre>
+<pre><code>## [1] -1.4809</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># t.obs = -1.4809</span>
+
+<span class="co">#Let's try it with the t.test function</span>
+<span class="kw">t.test</span>(clean.nyc$y1_read_percentile[clean.nyc$Treatment==<span class="st">&quot;1&quot;</span>] -<span class="st"> </span>clean.nyc$y0_read_percentile[clean.nyc$Treatment==<span class="st">&quot;1&quot;</span>], clean.nyc$y1_read_percentile[clean.nyc$Treatment==<span class="st">&quot;0&quot;</span>] -<span class="st"> </span>clean.nyc$y0_read_percentile[clean.nyc$Treatment==<span class="st">&quot;0&quot;</span>])</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  clean.nyc$y1_read_percentile[clean.nyc$Treatment == &quot;1&quot;] - clean.nyc$y0_read_percentile[clean.nyc$Treatment ==  and clean.nyc$y1_read_percentile[clean.nyc$Treatment == &quot;0&quot;] - clean.nyc$y0_read_percentile[clean.nyc$Treatment ==     &quot;1&quot;] and     &quot;0&quot;]
+## t = 1.4506, df = 1426.1, p-value = 0.1471
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.5216447  3.4834452
+## sample estimates:
+## mean of x mean of y 
+##  2.746479  1.265579</code></pre>
+<p>We fail to reject the null because the <span class="math">\(p_{obs} &gt; p_{0.05/2}\)</span>. Based on these statistics, there is good evidence that there is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.</p>
+<ol start="14" style="list-style-type: decimal">
+<li>(4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># GUIDE: mean point estimate + qt(p, df, lower.tail = TRUE)</span>
+<span class="co">#If we are intrested in the 95% CI, then we need to look at the 2.5 %ile and the 97.5 %ile.</span>
+(<span class="fl">2.746479</span> -<span class="st"> </span><span class="fl">1.265579</span> -<span class="dv">0</span>) +<span class="st"> </span><span class="kw">qt</span>(<span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),<span class="dt">df=</span><span class="fl">1426.1</span> ) *<span class="st"> </span>SE.diff.of.means</code></pre>
+<pre><code>## [1] -1.652319  4.614119</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">diff.of.means +<span class="st"> </span><span class="kw">qt</span>(<span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),<span class="dt">df=</span><span class="fl">1426.1</span> ) *<span class="st"> </span>SE.diff.of.means</code></pre>
+<pre><code>## [1] -4.614119  1.652319</code></pre>
+<p>We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 (<span class="math">\(-4.614119\)</span> &lt; <span class="math">\(\mu_{diff.of.means}\)</span> &lt; <span class="math">\(1.652319\)</span>).</p>
+<ol start="15" style="list-style-type: decimal">
 <li><p>(2 points) Interpret the confidence interval you estimated for question N in a sentence.</p></li>
 <li><p>(8 points) Perform a test of whether the average math pre-test score differs by grade level at <span class="math">\(\alpha = 0.10\)</span> significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.</p></li>
 <li><p>(8 points) The NYC School District considers students who perform at or above the 50th percentile to be “passing”. At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?</p></li>

@@ -292,7 +292,7 @@ t.obs <- diff.of.means - 0/SE.diff.of.means;print(t.obs)
 # t.obs = -0.6183467 or |-0.6183467| = 0.6183467
 
 #Let's try it with the t.test function
-t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"])
+t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"] - clean.nyc$y0_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"] - clean.nyc$y0_math_percentile[clean.nyc$Treatment=="0"])
 ```
 We can fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the year 1 math scores of students who received vouchers and those who did not.
 
@@ -308,7 +308,7 @@ We can still fail to reject the null because the $p_{obs} > p_{0.10/2}$. Based o
 ```{r}
 table(clean.nyc$Treatment)
 ```
-Because this is an experiment, I am making the assumption thatthere was random selection in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
+Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
 
 These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
@@ -327,8 +327,49 @@ $H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ 
 
 
 13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.  
+```{r}
+
+mean(clean.vouch$y1_read_percentile)
+sd(clean.vouch$y1_read_percentile)
+length(clean.vouch$y1_read_percentile)
+
+mean(clean.vouch$y0_read_percentile)
+sd(clean.vouch$y0_read_percentile)
+length(clean.vouch$y0_read_percentile)
+
+mdiff.vouch <- mean(clean.vouch$y1_read_percentile) - mean(clean.vouch$y0_read_percentile);print(mdiff.vouch)
+SE.mdiff.vouch <- sqrt(sd(clean.vouch$y0_read_percentile)^2/length(clean.vouch$y0_read_percentile) + sd(clean.vouch$y1_read_percentile)^2/length(clean.vouch$y1_read_percentile));print(SE.mdiff.vouch)
+
+mean(clean.no.vouch$y1_read_percentile)
+sd(clean.no.vouch$y1_read_percentile)
+length(clean.no.vouch$y1_read_percentile)
+
+mean(clean.no.vouch$y0_read_percentile)
+sd(clean.no.vouch$y0_read_percentile)
+length(clean.no.vouch$y0_read_percentile)
+
+mdiff.no.vouch <- mean(clean.no.vouch$y1_read_percentile) - mean(clean.no.vouch$y0_read_percentile);print(mdiff.no.vouch)
+SE.mdiff.no.vouch <- sqrt(sd(clean.no.vouch$y0_read_percentile)^2/length(clean.no.vouch$y0_read_percentile) + sd(clean.no.vouch$y1_read_percentile)^2/length(clean.no.vouch$y1_read_percentile));print(SE.mdiff.no.vouch)
+
+diff.of.means <- mdiff.vouch - mdiff.no.vouch - 0;print(diff.of.means)
+SE.diff.of.means <- sqrt(SE.mdiff.vouch^2 + SE.mdiff.no.vouch^2); print(SE.diff.of.means)
+
+t.obs <- diff.of.means - 0/SE.diff.of.means;print(t.obs)
+# t.obs = -1.4809
+
+#Let's try it with the t.test function
+t.test(clean.nyc$y1_read_percentile[clean.nyc$Treatment=="1"] - clean.nyc$y0_read_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_read_percentile[clean.nyc$Treatment=="0"] - clean.nyc$y0_read_percentile[clean.nyc$Treatment=="0"])
+```
+We fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.
  
 14. (4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.
+```{r}
+# GUIDE: mean point estimate + qt(p, df, lower.tail = TRUE)
+#If we are intrested in the 95% CI, then we need to look at the 2.5 %ile and the 97.5 %ile.
+(2.746479 - 1.265579 -0) + qt(c(0.025,0.975),df=1426.1 ) * SE.diff.of.means
+diff.of.means + qt(c(0.025,0.975),df=1426.1 ) * SE.diff.of.means
+```
+We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 ($-4.614119$ < $\mu_{diff.of.means}$ < $1.652319$). 
 
 15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.
 
