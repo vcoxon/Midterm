@@ -411,10 +411,10 @@ grade4.sd <- sd(grade4$y0_math_percentile); print(grade4.sd)
 grade5.mean <- mean(grade5$y0_math_percentile); print(grade5.mean)
 grade5.sd <- sd(grade5$y0_math_percentile); print(grade5.sd)
 
-summary(aov(y0_math_percentile~Grade,clean.nyc))
-summary.aov(lm(y0_math_percentile~Grade,clean.nyc))
+summary(aov(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
+summary.aov(lm(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
 ```
-With an observed probability of $p_{obs} = 0.00007$, we reject the null at the $\alpha_{0.001}$ level; there is statistical evidence that a difference between grades exists in the Year 0 math pre-test scores.
+With an observed probability of $p_{obs} = 0.00007$ ($F_{obs} < F_{\alpha=0.10,df_1=1,df2=1415}$), we reject the null not only at the $\alpha_{0.10}$ level, but also at the $\alpha_{0.001}$ level; the statistical evidence supports differences between grades in Year 0 math pre-test scores.
 
 
 **17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?**
