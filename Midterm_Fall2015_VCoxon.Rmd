@@ -83,7 +83,7 @@ Most of the variables you need should be pretty self explanatory:
 | `y3_math_percentile`    |  math score percentile after 3y |
 
 
-1. (6 points) Compute the average reading and math percentiles for each year across all students. 
+**1. (6 points) Compute the average reading and math percentiles for each year across all students.** 
 
 ```{r}
 library(knitr)
@@ -136,7 +136,7 @@ Reading Year 2 = 26.09    |      Mathematics Year 2 = 23.56
 Reading Year 3 = 32.63    |      Mathematics Year 3 = 32.50
 
 
-2. (4 points) Clean the original dataset by removing all students who do not have observed pre-test scores and year 1 scores for reading and for math.
+**2. (4 points) Clean the original dataset by removing all students who do not have observed pre-test scores and year 1 scores for reading and for math.**
 
 ```{r}
 stat.desc(scores, desc=F)
@@ -182,7 +182,7 @@ Reading Year 2 = 26.09; Clean = 25.26          Mathematics Year 2 = 23.56; Clean
 Reading Year 3 = 32.63; Clean = 33.54          Mathematics Year 3 = 32.50; Clean = 33.23
 
 
-3. (8 points) Make a figure (either a density plot of a histgram format) comparing the distributions of percentile reading scores for students who did and did not receive a voucher. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. 
+**3. (8 points) Make a figure (either a density plot of a histgram format) comparing the distributions of percentile reading scores for students who did and did not receive a voucher. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements.** 
 
 ```{r}
 clean.no.vouch <- filter(clean.nyc,Treatment=="1")
@@ -211,7 +211,7 @@ qplot(nyc.vouch$y3_read_percentile,geom = "histogram", binwidth = 1.0, main = "O
 ```
 
 
-4. (4 points) In no more than 2-3 sentences, describe what your visualization in 1.C indicates about these data. Do the treatment and control groups appear to be similar (in terms of reading pre-test scores)? Why or why not? 
+**4. (4 points) In no more than 2-3 sentences, describe what your visualization in 1.C indicates about these data. Do the treatment and control groups appear to be similar (in terms of reading pre-test scores)? Why or why not?** 
 ```{r}
 summary(clean.vouch$y0_read_percentile)
 summary(clean.no.vouch$y0_read_percentile)
@@ -221,12 +221,12 @@ summary(nyc.no.vouch$y0_read_percentile)
 Looking at both histograms and summary statstics for pre-test reading scores of both the dirty and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardlesss, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.  
 
 
-5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren't part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences. 
+**5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren't part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences.** 
 
 I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. 
 
 
-6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?
+**6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?**
 ```{r}
 table(nyc$Treatment,nyc$y0_math_percentile > 50)
 (896+67) / (824+64+896+67)
@@ -239,7 +239,7 @@ table(nyc$Treatment,nyc$y0_math_percentile > 50)
 The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. 
 
 
-7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?
+**7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?**
 ```{r}
 table(clean.nyc$Treatment,clean.nyc$y0_math_percentile > 50)
 53/(728+53)
@@ -247,7 +247,7 @@ table(clean.nyc$Treatment,clean.nyc$y0_math_percentile > 50)
 The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is 0.06786172.
 
 
-8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.
+**8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.**
 
 Null: *After one year, there is no average difference in math scores between students who receive vouchers and those who do not.*
 
@@ -261,7 +261,7 @@ Alternative: *After one year, there is an average difference in math scores betw
 $H_A$: $\mu_{math.vouch.y1}$ - $\mu_{math.vouch.y0}$ - $\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$ $!= 0$ 
 
 
-9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences. 
+**9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences.** 
 ```{r}
 mean(clean.vouch$y1_math_percentile)
 sd(clean.vouch$y1_math_percentile)
@@ -297,14 +297,14 @@ t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"] - clean.nyc$y0_mat
 We can fail to reject the null because the $p_{obs}$ > $p_{0.05/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the average year 1 math scores of students who received vouchers and those who did not.
 
 
-10. (2 points) Would your conclusion change at $\alpha = 0.10$? Why or why not?
+**10. (2 points) Would your conclusion change at $\alpha = 0.10$? Why or why not?**
 ```{r}
 t.test(clean.nyc$y1_math_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_math_percentile[clean.nyc$Treatment=="0"], conf.level = 0.90)
 ```
 We can still fail to reject the null because the $p_{obs}$ > $p_{0.10/2}$. Based on these statistics, there is good evidence that there is not a significant difference in the average year 1 math scores of students who received vouchers and those who did not. The difference we do observe is the equivalent to several tenths of a percentage point and is not statistically different from 0.
 
 
-11. (6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about? 
+**11. (6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about? **
 ```{r}
 table(clean.nyc$Treatment)
 ```
@@ -313,7 +313,7 @@ Because this is an experiment, I am making the assumption that there was both ra
 These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
 
-12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols. 
+**12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols.** 
 
 Null: *There is no average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
 
@@ -327,7 +327,7 @@ Alternative: *There is an average difference in Year 0 pre-test and Year 1  post
 $H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $!= 0$ 
 
 
-13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.  
+**13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.**  
 ```{r}
 
 mean(clean.vouch$y1_read_percentile)
@@ -364,7 +364,7 @@ t.test(clean.nyc$y1_read_percentile[clean.nyc$Treatment=="1"] - clean.nyc$y0_rea
 We fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.
 
  
-14. (4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.
+**14. (4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.**
 ```{r}
 # GUIDE: mean point estimate + qt(p, df, lower.tail = TRUE)
 #If we are intrested in the 95% CI, then we need to look at the 2.5 %ile and the 97.5 %ile.
@@ -373,12 +373,12 @@ diff.of.means + qt(c(0.025,0.975),df=1426.1 ) * SE.diff.of.means
 ```
 I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of th distribution if we continue to assume normality.
 
-15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.
+**15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.**
 
 We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 ($-4.614119$ < $\mu_{diff.of.means}$ < $1.652319$).
 
 
-16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at $\alpha = 0.10$ significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.
+**16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at $\alpha = 0.10$ significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.**
 ```{r}
 table(clean.nyc$Grade)
 Kinder <- filter(clean.nyc, Grade=="0")
@@ -401,7 +401,6 @@ grade4.sd <- sd(grade4$y0_math_percentile); print(grade4.sd)
 grade5.mean <- mean(grade5$y0_math_percentile); print(grade5.mean)
 grade5.sd <- sd(grade5$y0_math_percentile); print(grade5.sd)
 
-
 ```
 Null: *There is no average difference in Year 0 pre-test math scores between students in grades 1 through 5.*
 
@@ -415,11 +414,11 @@ Alternative: *There is an average difference in Year 0 pre-test math scores betw
 $H_A$: $\mu_{grade1.y0}$ != $\mu_{grade2.y0}$ != $\mu_{grade3.y0}$ != $\mu_{grade4.y0}$ != $\mu_{grade5.y0}$ != $0$
 
 
-17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?
+**17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?**
 
-18. (6 points) Make a boxplot that compares the distribution of math scores between the pre-test and year 1 post-test for all students. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. In no more than 2-3 sentences, describe how your figure supports (or does not support) your finding from question 17.
+**18. (6 points) Make a boxplot that compares the distribution of math scores between the pre-test and year 1 post-test for all students. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. In no more than 2-3 sentences, describe how your figure supports (or does not support) your finding from question 17.**
 
-19. (4 points) Consider the correlation between math percentile and reading percentile for year 1 test scores. Compute Pearson’s `r` between these two variables. Is the correlation higher or lower than you would have expected? 
+**19. (4 points) Consider the correlation between math percentile and reading percentile for year 1 test scores. Compute Pearson’s `r` between these two variables. Is the correlation higher or lower than you would have expected?** 
 
-20. (6 points) You might argue that percentiles are actually rank-order data and not ratio-level data. For rank-order data, a more appropriate correlation measure is Spearman’s $\rho$, which is a rank correlation. Compute $\rho$ and contrast the results from $r$ (for question S above). Why do the results differ?
+**20. (6 points) You might argue that percentiles are actually rank-order data and not ratio-level data. For rank-order data, a more appropriate correlation measure is Spearman’s $\rho$, which is a rank correlation. Compute $\rho$ and contrast the results from $r$ (for question S above). Why do the results differ?**
 
