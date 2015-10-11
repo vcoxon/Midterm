@@ -389,24 +389,30 @@ grade4 <- filter(clean.nyc, Grade=="4")
 grade5 <- filter(clean.nyc, Grade=="5")
 
 Kinder.mean <- mean(Kinder$y0_math_percentile); print(Kinder.mean)
+Kinder.sd <- sd(Kinder$y0_math_percentile); print(Kinder.sd)
 grade1.mean <- mean(grade1$y0_math_percentile); print(grade1.mean)
+grade1.sd <- sd(grade1$y0_math_percentile); print(grade1.sd)
 grade2.mean <- mean(grade2$y0_math_percentile); print(grade2.mean)
+grade2.sd <- sd(grade2$y0_math_percentile); print(grade2.sd)
 grade3.mean <- mean(grade3$y0_math_percentile); print(grade3.mean)
+grade3.sd <- sd(grade3$y0_math_percentile); print(grade3.sd)
 grade4.mean <- mean(grade4$y0_math_percentile); print(grade4.mean)
+grade4.sd <- sd(grade4$y0_math_percentile); print(grade4.sd)
 grade5.mean <- mean(grade5$y0_math_percentile); print(grade5.mean)
+grade5.sd <- sd(grade5$y0_math_percentile); print(grade5.sd)
 
 
 ```
-Null: *There is no average difference in Year 0 pre-test math scores between students in different grades.*
+Null: *There is no average difference in Year 0 pre-test math scores between students in grades 1 through 5.*
 
 
-$H_0$: $\mu_{read.vouch.y0}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $= 0$
+$H_0$: $\mu_{grade1.y0}$ = $\mu_{grade2.y0}$ = $\mu_{grade3.y0}$ = $\mu_{grade4.y0}$ = $\mu_{grade5.y0}$ = $0$
 
 
-Alternative: *There is an average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
+Alternative: *There is an average difference in Year 0 pre-test math scores between students in grades 1 through 5.*
 
 
-$H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $!= 0$ 
+$H_A$: $\mu_{grade1.y0}$ != $\mu_{grade2.y0}$ != $\mu_{grade3.y0}$ != $\mu_{grade4.y0}$ != $\mu_{grade5.y0}$ != $0$
 
 
 17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?
