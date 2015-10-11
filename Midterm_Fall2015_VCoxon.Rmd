@@ -312,6 +312,7 @@ Because this is an experiment, I am making the assumption that there was both ra
 
 These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
+
 12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols. 
 
 Null: *There is no average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
@@ -361,6 +362,7 @@ t.obs <- diff.of.means - 0/SE.diff.of.means;print(t.obs)
 t.test(clean.nyc$y1_read_percentile[clean.nyc$Treatment=="1"] - clean.nyc$y0_read_percentile[clean.nyc$Treatment=="1"], clean.nyc$y1_read_percentile[clean.nyc$Treatment=="0"] - clean.nyc$y0_read_percentile[clean.nyc$Treatment=="0"])
 ```
 We fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these statistics, there is good evidence that there is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.
+
  
 14. (4 points) Explain how you could evaluate the hypothesis above using a confidence interval instead of a p-value.
 ```{r}
@@ -375,7 +377,37 @@ I can use the Confidence Interval to estimate the range of values that include t
 
 We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 ($-4.614119$ < $\mu_{diff.of.means}$ < $1.652319$).
 
+
 16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at $\alpha = 0.10$ significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.
+```{r}
+table(clean.nyc$Grade)
+Kinder <- filter(clean.nyc, Grade=="0")
+grade1 <- filter(clean.nyc, Grade=="1")
+grade2 <- filter(clean.nyc, Grade=="2")
+grade3 <- filter(clean.nyc, Grade=="3")
+grade4 <- filter(clean.nyc, Grade=="4")
+grade5 <- filter(clean.nyc, Grade=="5")
+
+Kinder.mean <- mean(Kinder$y0_math_percentile); print(Kinder.mean)
+grade1.mean <- mean(grade1$y0_math_percentile); print(grade1.mean)
+grade2.mean <- mean(grade2$y0_math_percentile); print(grade2.mean)
+grade3.mean <- mean(grade3$y0_math_percentile); print(grade3.mean)
+grade4.mean <- mean(grade4$y0_math_percentile); print(grade4.mean)
+grade5.mean <- mean(grade5$y0_math_percentile); print(grade5.mean)
+
+
+```
+Null: *There is no average difference in Year 0 pre-test math scores between students in different grades.*
+
+
+$H_0$: $\mu_{read.vouch.y0}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $= 0$
+
+
+Alternative: *There is an average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
+
+
+$H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $!= 0$ 
+
 
 17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?
 
