@@ -917,9 +917,9 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nyc.no.vouch$y0_read_percentile)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00    4.00   16.00   22.21   34.00   99.00     411</code></pre>
-<p>Looking at both histograms and summary statstics for pre-test reading scores of both the dirty and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardlesss, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.</p>
+<p>Looking at both histograms and summary statstics for pre-test reading scores of both the “dirty”&quot; and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardless, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.</p>
 <p><strong>5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren’t part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences.</strong></p>
-<p>I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students.</p>
+<p>I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. The “saving grace” is that the Central Limit Theorem applies; I can (and will) use the sample means as they are normally distributed.</p>
 <p><strong>6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nyc$Treatment,nyc$y0_math_percentile &gt;<span class="st"> </span><span class="dv">50</span>)</code></pre>
 <pre><code>##    
@@ -943,9 +943,16 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 ##     FALSE TRUE
 ##   0   624   50
 ##   1   728   53</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">53</span>/(<span class="dv">728+53</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">53</span>/(<span class="dv">728+53</span>) <span class="co">#Cleaned Data probability = 0.06786172</span></code></pre>
 <pre><code>## [1] 0.06786172</code></pre>
-<p>The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is 0.06786172.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nyc$Treatment,nyc$y0_math_percentile &gt;<span class="st"> </span><span class="dv">50</span>)</code></pre>
+<pre><code>##    
+##     FALSE TRUE
+##   0   824   64
+##   1   896   67</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">67</span>/(<span class="dv">896+67</span>) <span class="co">#Full Data probability = 0.06957425</span></code></pre>
+<pre><code>## [1] 0.06957425</code></pre>
+<p>The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is approximately 0.070 (0.06786172 or 0.06957425 depending on the data used).</p>
 <p><strong>8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.</strong></p>
 <p>Null: <em>After one year, there is no average difference in math scores between students who receive vouchers and those who do not.</em></p>
 <p><span class="math">\(H_0\)</span>: [<span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span>] - [<span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch}\)</span>] <span class="math">\(= 0\)</span></p>
