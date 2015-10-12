@@ -917,26 +917,24 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nyc.no.vouch$y0_read_percentile)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00    4.00   16.00   22.21   34.00   99.00     411</code></pre>
-<p>Looking at both histograms and summary statistics for pre-test reading scores of both the “dirty”&quot; and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardless, they appear to be a good match for isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.</p>
+<p>Looking at the histograms and summary statistics for pre-test reading scores of both the “dirty”&quot; and clean data, it appears that the groups are similar despite slightly higher dispersion in the no.voucher set. Regardless, they appear to be a good match for comparing and isolating the effect of the voucher using test scores (even though we are not necessarily discussing causality at this point). Additionally, this comparability appears to hold for years 1, 2, and 3.</p>
 <p><strong>5. (4 points) Typically, policy experiments such as the NYC school voucher lottery experiment are indended to produce statistical evidence that can then be generalized to broader policy applications (i.e., how might vouchers influence educational outcomes for other students who weren’t part of the original experiment). Based on the reading pre-test scores that you visualized in C, describe any concerns you might have about our ability to generalize the results of this experiment to ALL elementary school students in the United States in no more than 2-3 sentences.</strong></p>
-<p>I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. The “saving grace” is that the Central Limit Theorem applies; I can (and will) use the sample means as they are normally distributed.</p>
+<p>I have concerns about the situation of the mean. Test scores are usually normally distributed; this is not the case in this sample. There is an obvious and consistent right skew and the mean is nowhere near the 50th %ile leading me to conclude that this sample is not a representative sample of ALL elementary school students. I have suspicions that this experiment is being conducted on a specific target group that is different from average elementary school students. The “saving grace” is that the Central Limit Theorem applies; I can (and will) use the sample means; they are normally distributed.</p>
 <p><strong>6. (4 points) What is the probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test?</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nyc$Treatment,nyc$y0_math_percentile &gt;<span class="st"> </span><span class="dv">50</span>)</code></pre>
 <pre><code>##    
 ##     FALSE TRUE
 ##   0   824   64
 ##   1   896   67</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">896+67</span>) /<span class="st"> </span>(<span class="dv">824+64+896+67</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">896+67</span>) /<span class="st"> </span>(<span class="dv">824+64+896+67</span>)  <span class="co"># P(voucher) = 0.5202593</span></code></pre>
 <pre><code>## [1] 0.5202593</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># P(voucher) = 0.5202593</span>
-(<span class="dv">64+67</span>)/(<span class="dv">624+50+896+67</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">64+67</span>)/(<span class="dv">624+50+896+67</span>)  <span class="co"># P(y0_math_percentile &gt;50) = 0.08002443</span></code></pre>
 <pre><code>## [1] 0.08002443</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># P(y0_math_percentile &gt;50) = 0.08002443</span>
-<span class="dv">67</span>/(<span class="dv">624+50+896+67</span>) </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="fl">0.5202593</span> *<span class="st"> </span><span class="fl">0.08002443</span> <span class="co"># Method 1</span></code></pre>
+<pre><code>## [1] 0.04163345</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">67</span>/(<span class="dv">624+50+896+67</span>) <span class="co">#Method 2</span></code></pre>
 <pre><code>## [1] 0.04092853</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="fl">0.5202593</span> *<span class="st"> </span><span class="fl">0.04092853</span></code></pre>
-<pre><code>## [1] 0.02129345</code></pre>
-<p>The probability that a randomly selected student in the data set received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. -I NEED TO CHECK THE PROBABILITY RULES ON THIS QUESTION-</p>
+<p>The probability that a randomly selected student in the data set received a voucher and scored above the 50th percentile on the math pre-test is approximately 0.041 (Method 1 = 0.04163345 or Method 2 = 0.04092853).</p>
 <p><strong>7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(clean.nyc$Treatment,clean.nyc$y0_math_percentile &gt;<span class="st"> </span><span class="dv">50</span>)</code></pre>
 <pre><code>##    
@@ -952,6 +950,10 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 ##   1   896   67</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">67</span>/(<span class="dv">896+67</span>) <span class="co">#Full Data probability = 0.06957425</span></code></pre>
 <pre><code>## [1] 0.06957425</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">896+67</span>) /<span class="st"> </span>(<span class="dv">824+64+896+67</span>)  <span class="co"># P(voucher) = 0.5202593</span></code></pre>
+<pre><code>## [1] 0.5202593</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="fl">0.5202593</span> *<span class="st"> </span><span class="fl">0.06957425</span></code></pre>
+<pre><code>## [1] 0.03619665</code></pre>
 <p>The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is approximately 0.070 (0.06786172 or 0.06957425 depending on the data used).</p>
 <p><strong>8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.</strong></p>
 <p>Null: <em>After one year, there is no average difference in math scores between students who receive vouchers and those who do not.</em></p>
@@ -1113,7 +1115,7 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre><code>## [1] -1.652319  4.614119</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">diff.of.means +<span class="st"> </span><span class="kw">qt</span>(<span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),<span class="dt">df=</span><span class="fl">1426.1</span> ) *<span class="st"> </span>SE.diff.of.means</code></pre>
 <pre><code>## [1] -4.614119  1.652319</code></pre>
-<p>I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of the distribution if we continue to assume normality.</p>
+<p>I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time (and this could end up being be a non-trivial number) a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of the distribution if we continue to assume normality.</p>
 <p><strong>15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.</strong></p>
 <p>We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 (<span class="math">\(-4.614119\)</span> &lt; <span class="math">\(\mu_{diff.of.means}\)</span> &lt; <span class="math">\(1.652319\)</span>).</p>
 <p><strong>16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at <span class="math">\(\alpha = 0.10\)</span> significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.</strong></p>
@@ -1269,12 +1271,12 @@ Kinder.mean &lt;-<span class="st"> </span><span class="kw">mean</span>(Kinder$y0
 <pre><code>## [1] NA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(clean.nyc$y1_math_percentile,clean.nyc$y1_read_percentile,<span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</code></pre>
 <pre><code>## [1] 0.6164846</code></pre>
-<p>Using Pearson’s r, the correlation between Year 1 Math Scores and Year 1 Reading Scores is 0.6164846or 0.62. For every one unit increase in Year 1 Math Scores, Year 1 Reading Scores may increase by approximately 0.62 units. This is about what I expected considering my experience with the Get Georgia Reading campaign. They speak at length about the correlation between math scores and reading scores but from the reading perspective; for every 1 unit increase in reading scores, math scores increase 0.62 units. The whole idea is that math problems are actually reading problems beginning in 3rd grade when kids start to “read to learn”.</p>
+<p>Using Pearson’s r, the correlation between Year 1 Math Scores and Year 1 Reading Scores is 0.6164846or 0.62. For every one unit increase in Year 1 Math Scores, there is a positive correlation in Year 1 Reading Scores of approximately 0.62 units. This is about what I expected considering my experience with the Get Georgia Reading campaign. They speak at length about the correlation between math scores and reading scores but from the reading perspective; for every 1 unit increase in reading scores, math scores increase 0.62 units. The whole idea is that math problems are actually reading problems beginning in 3rd grade when kids start to “read to learn”.</p>
 <p><strong>20. (6 points) You might argue that percentiles are actually rank-order data and not ratio-level data. For rank-order data, a more appropriate correlation measure is Spearman’s <span class="math">\(\Rho\)</span>, which is a rank correlation. Compute <span class="math">\(\rho\)</span> and contrast the results from <span class="math">\(r\)</span> (for question S above). Why do the results differ?</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This exercise is asking us to treat Year 1 Math Scores and Year 1 Reading Scores as ordinal, categorical variables instead of as discrete, numerical variables.</span>
 <span class="kw">cor</span>(clean.nyc$y1_math_percentile,clean.nyc$y1_read_percentile,<span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</code></pre>
 <pre><code>## [1] 0.5848958</code></pre>
-<p>The correlation between Year 1 Math Scores and Year 1 Reading Score using Spearman’s <span class="math">\(Rho\)</span> is 0.5848958 or 0.58. For every one unit increase in Year 1 Math Scores, Year 1 Reading Scores may increase by approximately 0.58 units. This correlation estimate is approximately 0.04 less than the estimate using Pearson’s <code>r</code>.</p>
+<p>The correlation between Year 1 Math Scores and Year 1 Reading Score using Spearman’s <span class="math">\(Rho\)</span> is 0.5848958 or 0.58. For every one unit increase in Year 1 Math Scores, there is a positive correlation in Year 1 Reading Scores by approximately 0.58 units. This correlation estimate is approximately 0.04 less than the estimate using Pearson’s <code>r</code>.</p>
 <p>The results from the Pearson’s <code>r</code> and Spearman’s <span class="math">\(\rho\)</span> differ because the Pearson’s <code>r</code> measures the strength of the linear relationship between normally distributed, interval(discrete or continuous) variables. I have repeatedly discussed the problems applying the normal model to this data; Spearman’s <span class="math">\(\rho\)</span> may be a more precise estimate of the correlation between Year 1 Math and Reading Scores because it does not require normality yet assumes a monotonic relationship between the ordinal variables (as the value of one variable increases, so does the value of the other variable; or as the value of one variable increases, the other variable value decreases).</p>
 </div>
 
