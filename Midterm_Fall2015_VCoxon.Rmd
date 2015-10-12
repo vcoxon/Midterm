@@ -252,13 +252,13 @@ The probability that a randomly selected student who received a voucher scored a
 Null: *After one year, there is no average difference in math scores between students who receive vouchers and those who do not.*
 
 
-$H_0$: $\mu_{math.vouch.y1}$ - $\mu_{math.vouch.y0}$ - $\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$ $= 0$
+$H_0$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ \- $\mu_{math.no.vouch}$] $= 0$
 
 
 Alternative: *After one year, there is an average difference in math scores between students who receive vouchers and those who do not.*
 
 
-$H_A$: $\mu_{math.vouch.y1}$ - $\mu_{math.vouch.y0}$ - $\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$ $!= 0$ 
+$H_A$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$] $\ne 0$ 
 
 
 **9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences.** 
@@ -318,13 +318,13 @@ These distributions are not symmetrical; I addressed this earlier when I discuss
 Null: *There is no average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
 
 
-$H_0$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $= 0$
+$H_0$: [$\mu_{read.vouch.y1}$ \- $\mu_{read.vouch.y0}$] \- [$\mu_{read.no.vouch.y1}$ \- $\mu_{read.no.vouch.y0}$] $= 0$
 
 
 Alternative: *There is an average difference in Year 0 pre-test and Year 1  post-test reading ability between students who receive vouchers and those who do not.*
 
 
-$H_A$: $\mu_{read.vouch.y1}$ - $\mu_{read.vouch.y0}$ - $\mu_{read.no.vouch.y1}$ - $\mu_{read.no.vouch.y0}$ $!= 0$ 
+$H_A$: [$\mu_{read.vouch.y1}$ \- $\mu_{read.vouch.y0}$] \- [$\mu_{read.no.vouch.y1}$ \- $\mu_{read.no.vouch.y0}$] $\ne 0$ 
 
 
 **13. (6 points) Conduct a t-test to evaluate this hypothesis at $\alpha = 0.01$ significance level. Interpret your results in 1-2 complete sentences.**  
@@ -382,13 +382,13 @@ We can be 95% confident that the true value of the average difference in Year 0 
 Null: *There is no average difference in Year 0 pre-test math scores between students in grades Kindergarten through 5.*
 
 
-$H_0$: $\mu_{Kinder.y0}$ != $\mu_{grade1.y0}$ = $\mu_{grade2.y0}$ = $\mu_{grade3.y0}$ = $\mu_{grade4.y0}$ = $\mu_{grade5.y0}$ = $0$
+$H_0$: $\mu_{Kinder.y0}$ \= $\mu_{grade1.y0}$ \= $\mu_{grade2.y0}$ \= $\mu_{grade3.y0}$ \= $\mu_{grade4.y0}$ \= $\mu_{grade5.y0}$ $= 0$
 
 
 Alternative: *There is an average difference in Year 0 pre-test math scores between students in grades Kindergarten through 5.*
 
 
-$H_A$: $\mu_{Kinder.y0}$ = $\mu_{grade1.y0}$ != $\mu_{grade2.y0}$ != $\mu_{grade3.y0}$ != $\mu_{grade4.y0}$ != $\mu_{grade5.y0}$ != $0$
+$H_A$: $\mu_{Kinder.y0}$ $\ne$ $\mu_{grade1.y0}$ $\ne$ $\mu_{grade2.y0}$ $\ne$ $\mu_{grade3.y0}$ $\ne$ $\mu_{grade4.y0}$ $\ne$ $\mu_{grade5.y0}$ $\ne 0$
 ```{r}
 table(clean.nyc$Grade)
 Kinder <- filter(clean.nyc, Grade=="0")
@@ -415,12 +415,25 @@ summary(aov(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
 summary.aov(lm(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
 0.05/6
 0.10/6
+
 pairwise.t.test(x=clean.nyc$y0_math_percentile,g = clean.nyc$Grade,p.adjust.method = 'bonf')
+#This test shows us where the differences occur. This is more than the question asked but is something I would like to know. It can indicate upward progress if the kids are tracked.
 ```
-With an observed probability of $p_{obs} = 0.00007$ > $p = 0.01666667$ (the critical probability value; $F_{obs} < F_{\alpha=0.10,df_1=1,df2=1415}), we reject the null not only at the $\alpha_{0.10}$ level, but also at the $\alpha_{0.05}$ and $\alpha_{0.001}$ levels; the statistical evidence supports at least one difference between grades in Year 0 math pre-test scores.
+With an observed probability of $p_{obs} = 0.00007$ < $p = 0.01666667$ (the critical probability value; $F_{obs} < F_{\alpha=0.10,df_1=1,df2=1415}$), we reject the null not only at the $\alpha_{0.10}$ level, but also at the $\alpha_{0.05}$ and $\alpha_{0.01}$ levels; the statistical evidence supports at least one difference between grades in Year 0 math pre-test scores.
 
 
 **17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?**
+
+Null: *There is no significant difference in the proportion of students considered to be passing between Year 0 pre-test math scores and Year 1 post-test math scores.*
+
+
+$H_0$: $\Pi_{Math}^0$ \= $\Pi_{Math}^1$ 
+
+
+Alternative: *There is a significant difference in the proportion of students considered to be passing between Year 0 pre-test math scores and Year 1 post-test math scores.*
+
+
+$H_A$: $\Pi_{Math}^0$ $\ne$ $\Pi_{Math}^1$ 
 ```{r}
 table(nyc$y0_math_percentile >=50)
 Year0.50plus.hat = 144/(1707+144);print(Year0.50plus.hat)
@@ -436,10 +449,34 @@ plot(table(nyc$y0_math_percentile>=50,nyc$y1_math_percentile>=50), main="Proport
 # z = (pi hat2 - pi hat1) - 0/ SE pool
 prop.test(x=c(Year0.50plus.n*Year0.50plus.hat,Year1.50plus.n*Year1.50plus.hat), n = c(Year0.50plus.n,Year1.50plus.n),alternative = c("two.sided"),conf.level = 0.99,correct = TRUE)
 ```
-
+With an observed probability of $p_{obs} = 0.00000005836$ < $p = 0.01$ we reject the null; the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math is significantly different between the Year 0 pre-test and Year 1 post-test.
 
 
 **18. (6 points) Make a boxplot that compares the distribution of math scores between the pre-test and year 1 post-test for all students. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. In no more than 2-3 sentences, describe how your figure supports (or does not support) your finding from question 17.**
+```{r}
+summary(clean.nyc$y0_math_percentile)
+summary(clean.nyc$y1_math_percentile)
+ggplot(nyc, aes(y = y0_math_percentile, x = 1)) + geom_boxplot()
+ggplot(nyc, aes(y = y1_math_percentile, x = 1 )) + geom_boxplot()
+boxplot(nyc$y0_math_percentile,nyc$y1_math_percentile,
+        horizontal=TRUE,
+        names=c("Year 0 Pre-Test","Year 1 Post-Test"),
+        col=c("turquoise","tomato"),
+        xlab="Math Score Percentile",
+        main="Math Score Comparison")
+```
+The boxplots support the conclusion that proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math is significantly different between the Year 0 pre-test and Year 1 post-test. There is a noticable positive change from Year 0 to Year1 in the 1st Quartiles, the Medians, and the 3rd Quartiles. Additionally, the maximum value is significantly higher in Year1 than in Year0, excluding outliers, by approximately 15 percentage points.  
+
+These are just for fun...
+```{r}
+ggplot(nyc, aes(y = y0_math_percentile, x = 1 )) + geom_violin()
+ggplot(nyc, aes(y = y1_math_percentile, x = 1 )) + geom_violin()
+
+boxplot(y0_math_percentile~Grade,data=nyc)
+boxplot(y1_math_percentile~Grade,data=nyc)
+```
+
+
 
 **19. (4 points) Consider the correlation between math percentile and reading percentile for year 1 test scores. Compute Pearson’s `r` between these two variables. Is the correlation higher or lower than you would have expected?** 
 
