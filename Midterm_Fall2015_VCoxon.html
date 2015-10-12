@@ -936,7 +936,7 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre><code>## [1] 0.04092853</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="fl">0.5202593</span> *<span class="st"> </span><span class="fl">0.04092853</span></code></pre>
 <pre><code>## [1] 0.02129345</code></pre>
-<p>The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853.</p>
+<p>The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. -I NEED TO CHECK THE PROBABILITY RULES ON THIS QUESTION-</p>
 <p><strong>7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(clean.nyc$Treatment,clean.nyc$y0_math_percentile &gt;<span class="st"> </span><span class="dv">50</span>)</code></pre>
 <pre><code>##    
@@ -955,9 +955,9 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <p>The probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test is approximately 0.070 (0.06786172 or 0.06957425 depending on the data used).</p>
 <p><strong>8. (4 points) We are interested in studying whether the change in math scores after one year is different for students who receive a voucher versus those who do not. Write the null and alternative hypotheses in words and then using symbols.</strong></p>
 <p>Null: <em>After one year, there is no average difference in math scores between students who receive vouchers and those who do not.</em></p>
-<p><span class="math">\(H_0\)</span>: [<span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span>] - [<span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch}\)</span>] <span class="math">\(= 0\)</span></p>
+<p><span class="math">\(H_0\)</span>: [<span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span>] - [<span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch.y0}\)</span>] <span class="math">\(= 0\)</span></p>
 <p>Alternative: <em>After one year, there is an average difference in math scores between students who receive vouchers and those who do not.</em></p>
-<p><span class="math">\(H_A\)</span>: [<span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span>] - [<span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch}\)</span>] <span class="math">\(\ne 0\)</span></p>
+<p><span class="math">\(H_A\)</span>: [<span class="math">\(\mu_{math.vouch.y1}\)</span> - <span class="math">\(\mu_{math.vouch.y0}\)</span>] - [<span class="math">\(\mu_{math.no.vouch.y1}\)</span> - <span class="math">\(\mu_{math.no.vouch.y0}\)</span>] <span class="math">\(\ne 0\)</span></p>
 <p><strong>9. (6 points) Evaluate the hypothesis from 1.H at a significance level of <span class="math">\(\alpha = 0.05\)</span> and state your conclusion in 1-2 sentences.</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(clean.vouch$y1_math_percentile)</code></pre>
 <pre><code>## [1] 23.04451</code></pre>
@@ -1032,7 +1032,19 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre><code>## 
 ##   0   1 
 ## 674 781</code></pre>
-<p>Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other. Both the treatment and control groups meet the condition of n &gt;30.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">674</span>/(<span class="dv">674+781</span>)</code></pre>
+<pre><code>## [1] 0.4632302</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">781</span>/(<span class="dv">674+781</span>)</code></pre>
+<pre><code>## [1] 0.5367698</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nyc$Treatment)</code></pre>
+<pre><code>## 
+##    0    1 
+## 1292 1374</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1291</span>/(<span class="dv">1291+1374</span>)</code></pre>
+<pre><code>## [1] 0.4844278</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1374</span>/(<span class="dv">1291+1374</span>)</code></pre>
+<pre><code>## [1] 0.5155722</code></pre>
+<p>Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Clean Data Treatment vs.Control; np =0.4632302, 1-np = 0.5367698 versus Full Data Treatment vs. Control; np = 0.4844278, 1-np = 0.5155722). Assuming the differences in the proportions is not statistically significant, this satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other. Both the treatment and control groups meet the condition of n &gt;30.</p>
 <p>These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.</p>
 <p><strong>12. (4 points) Next, you are asked to evaluate whether students in the treatment group differ in terms of their reading ability from the pre-test to the year 1 post-test. Write out the null and alternative hypotheses in words and then in symbols.</strong></p>
 <p>Null: <em>There is no average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not.</em></p>
@@ -1101,7 +1113,7 @@ nyc.vouch &lt;-<span class="st"> </span><span class="kw">filter</span>(nyc,Treat
 <pre><code>## [1] -1.652319  4.614119</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">diff.of.means +<span class="st"> </span><span class="kw">qt</span>(<span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),<span class="dt">df=</span><span class="fl">1426.1</span> ) *<span class="st"> </span>SE.diff.of.means</code></pre>
 <pre><code>## [1] -4.614119  1.652319</code></pre>
-<p>I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of th distribution if we continue to assume normality.</p>
+<p>I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of the distribution if we continue to assume normality.</p>
 <p><strong>15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.</strong></p>
 <p>We can be 95% confident that the true value of the average difference in Year 0 pre-test and Year 1 post-test reading ability between students who receive vouchers and those who do not is between -4.614119 and 1.652319 (<span class="math">\(-4.614119\)</span> &lt; <span class="math">\(\mu_{diff.of.means}\)</span> &lt; <span class="math">\(1.652319\)</span>).</p>
 <p><strong>16. (8 points) Perform a test of whether the average math pre-test score differs by grade level at <span class="math">\(\alpha = 0.10\)</span> significance level. Write out your hypothesis in symbols, perform the test, and then report your findings in a complete sentence.</strong></p>

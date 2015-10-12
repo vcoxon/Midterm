@@ -237,7 +237,7 @@ table(nyc$Treatment,nyc$y0_math_percentile > 50)
 0.5202593 * 0.04092853
 ```
 The probability that a randomly selected student in the dataset received a voucher and scored above the 50th percentile on the math pre-test is 0.04092853. 
-
+-I NEED TO CHECK THE PROBABILITY RULES ON THIS QUESTION-
 
 **7. (4 points) What is the probability that a randomly selected student who received a voucher scored above the 50th percentile on the math pre-test?**
 ```{r}
@@ -254,13 +254,13 @@ The probability that a randomly selected student who received a voucher scored a
 Null: *After one year, there is no average difference in math scores between students who receive vouchers and those who do not.*
 
 
-$H_0$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ \- $\mu_{math.no.vouch}$] $= 0$
+$H_0$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ \- $\mu_{math.no.vouch.y0}$] $= 0$
 
 
 Alternative: *After one year, there is an average difference in math scores between students who receive vouchers and those who do not.*
 
 
-$H_A$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch}$] $\ne 0$ 
+$H_A$: [$\mu_{math.vouch.y1}$ \- $\mu_{math.vouch.y0}$] \- [$\mu_{math.no.vouch.y1}$ - $\mu_{math.no.vouch.y0}$] $\ne 0$ 
 
 
 **9. (6 points) Evaluate the hypothesis from 1.H at a significance level of $\alpha = 0.05$ and state your conclusion in 1-2 sentences.** 
@@ -309,8 +309,13 @@ We can still fail to reject the null because the $p_{obs}$ > $p_{0.10/2}$. Based
 **11. (6 points) There are four assumptions that hold for the test above to be valid: independence within groups, independence between groups, sample sizes both above 30, and symmetric distributions. Are you satisfied that each of these are upheld? Is there anything in particular that you might be concerned about? **
 ```{r}
 table(clean.nyc$Treatment)
+674/(674+781)
+781/(674+781)
+table(nyc$Treatment)
+1291/(1291+1374)
+1374/(1291+1374)
 ```
-Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Treatment vs.Control). This satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
+Because this is an experiment, I am making the assumption that there was both random selection and random assignment in regards to voucher assignment (Clean Data Treatment vs.Control; np =0.4632302, 1-np = 0.5367698 versus Full Data Treatment vs. Control; np = 0.4844278, 1-np = 0.5155722). Assuming the differences in the proportions is not statistically significant, this satisfies the required condition of between group independence because each student had the same probability of being selected for a voucher. Likewise, being selected for Treatment should have no relation to those in the other group; there is nothing to alert us that there is some pre-existing atribute that increases thee chance of a person being in one group or the other.  Both the treatment and control groups meet the condition of n >30.  
 
 These distributions are not symmetrical; I addressed this earlier when I discussed the possibility that the normal model may not necessarily apply because of the strong and consistant right skew in the data. The data  do not even approach normality until Year 3. Therefore, any conclusion we come to about the impact or lack of impact of the vouchers needs to be tempered in light of this skew and the inability of the normal model to acccurately describe this data.
 
@@ -372,7 +377,7 @@ We fail to reject the null because the $p_{obs} > p_{0.05/2}$. Based on these st
 (2.746479 - 1.265579 -0) + qt(c(0.025,0.975),df=1426.1 ) * SE.diff.of.means
 diff.of.means + qt(c(0.025,0.975),df=1426.1 ) * SE.diff.of.means
 ```
-I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of th distribution if we continue to assume normality.
+I can use the Confidence Interval to estimate the range of values that include the true population average difference of the means at least 95% of the time. 5% of the time; and this could end up being be a non-trivial number; a sample will have a difference of means that does not include the true population average difference of means. This observation could be at the high end or at the low end of the distribution if we continue to assume normality.
 
 **15. (2 points) Interpret the confidence interval you estimated for question N in a sentence.**
 
