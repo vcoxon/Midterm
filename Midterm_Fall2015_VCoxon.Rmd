@@ -413,11 +413,31 @@ grade5.sd <- sd(grade5$y0_math_percentile); print(grade5.sd)
 
 summary(aov(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
 summary.aov(lm(y0_math_percentile~Grade,clean.nyc),conf.level=0.90)
+0.05/6
+0.10/6
+pairwise.t.test(x=clean.nyc$y0_math_percentile,g = clean.nyc$Grade,p.adjust.method = 'bonf')
 ```
-With an observed probability of $p_{obs} = 0.00007$ ($F_{obs} < F_{\alpha=0.10,df_1=1,df2=1415}$), we reject the null not only at the $\alpha_{0.10}$ level, but also at the $\alpha_{0.001}$ level; the statistical evidence supports differences between grades in Year 0 math pre-test scores.
+With an observed probability of $p_{obs} = 0.00007$ > $p = 0.01666667$ (the critical probability value; $F_{obs} < F_{\alpha=0.10,df_1=1,df2=1415}), we reject the null not only at the $\alpha_{0.10}$ level, but also at the $\alpha_{0.05}$ and $\alpha_{0.001}$ levels; the statistical evidence supports at least one difference between grades in Year 0 math pre-test scores.
 
 
 **17. (8 points) The NYC School District considers students who perform at or above the 50th percentile to be "passing". At a 99% significance level, is the proportion of all students in the sample (voucher and no-voucher) that are considered to be passing in math significantly different between the pre-test and year 1 post-test?**
+```{r}
+table(nyc$y0_math_percentile >=50)
+Year0.50plus.hat = 144/(1707+144);print(Year0.50plus.hat)
+Year0.50plus.n = 1707+144
+table(nyc$y1_math_percentile >= 50)
+Year1.50plus.hat = 274/(1806+274);print(Year1.50plus.hat)
+Year1.50plus.n = 1806+274
+
+plot(table(nyc$y0_math_percentile>=50,nyc$y1_math_percentile>=50), main="Proportion Comparison: Year 0 and Year 1 Passing Math Scores", xlab="Year 0 Math Score >= 50", ylab="Year 1 Math Score >= 50")
+
+# SE pool FORMULA: sqrt [pi hat1(1-pi hat1)/n1 + pi hat2(1-pi hat2)/n2]
+# CI FORMULA: (pi hat2 - pi hat1) + - z(SE pool)
+# z = (pi hat2 - pi hat1) - 0/ SE pool
+prop.test(x=c(Year0.50plus.n*Year0.50plus.hat,Year1.50plus.n*Year1.50plus.hat), n = c(Year0.50plus.n,Year1.50plus.n),alternative = c("two.sided"),conf.level = 0.99,correct = TRUE)
+```
+
+
 
 **18. (6 points) Make a boxplot that compares the distribution of math scores between the pre-test and year 1 post-test for all students. Do your best to make the figure "publishable" by giving it clear axis titles, legend labels, and other aesthetic improvements. In no more than 2-3 sentences, describe how your figure supports (or does not support) your finding from question 17.**
 
